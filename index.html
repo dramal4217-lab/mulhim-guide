@@ -274,6 +274,7 @@ details.faq p{padding:0 14px 12px;color:var(--ink-2)}
     <div class="gain panel" id="gain"></div>
     <div class="sum" id="sum" aria-live="polite"></div>
     <div><button class="btn" id="reset" type="button">تصفير الاختيارات</button></div>
+    <p class="small">تُحفظ اختياراتك على هذا الجهاز فقط، ولا تُرسل إلى أي جهة.</p>
   </section>
 
   <!-- 7 -->
@@ -871,17 +872,20 @@ var PENDING=[];
     var ok=n===CONDS.length;v.className='verdict'+(ok?' done':'');
     v.innerHTML=ok?'<strong>الشروط متحققة كلها ('+nf(CONDS.length)+')</strong><span>انتقل إلى الشواهد.</span>':'<strong>'+nf(n)+' من '+nf(CONDS.length)+' شروط</strong><span class="small">علّم الشروط المتحققة لتعرف ما تبقى.</span>';
   }
+  function save(){try{var c=[];CONDS.forEach(function(_,i){if($('#cond'+i)&&$('#cond'+i).checked)c.push(i)});localStorage.setItem('mg1:'+cur,JSON.stringify({s:state,c:c}))}catch(e){}}
+  function restore(){try{var sv=JSON.parse(localStorage.getItem('mg1:'+cur)||'null');if(!sv)return;ids.forEach(function(x){var v=sv.s&&sv.s[x.id];if(typeof v==='number'&&v>=0&&v<x.m.calc.length){state[x.id]=v;$('#'+x.id).value=v}});(sv.c||[]).forEach(function(i){var e=$('#cond'+i);if(e)e.checked=true});verdict()}catch(e){}}
   function recalc(){
     var total=0,full=0,gaps=[];
     CRIT.forEach(function(c){
       var sub=0,cm=ids.filter(function(x){return x.c===c});
       cm.forEach(function(x){
-        var pts=x.m.sc[state[x.id]][1],mx=Math.max.apply(null,x.m.sc.map(function(y){return y[1]}));
+        var pts=x.m.calc[state[x.id]][1],mx=Math.max.apply(null,x.m.sc.map(function(y){return y[1]}));
         sub+=pts;if(mx-pts>0)gaps.push({s:x.m.s,c:c.n,gap:mx-pts,mx:mx});
       });
-      var ok=cm.every(function(x){return x.m.sc[state[x.id]][1]>0});if(ok)full++;
+      var ok=cm.every(function(x){return x.m.calc[state[x.id]][1]>0});if(ok)full++;
       total+=sub;$('#sub'+c.n).textContent=nf(sub)+' / '+nf(c.w);
     });
+    save();
     var NC=CRIT.length,pct=Math.round(full/NC*100),need=Math.ceil(NC*0.6);
     $('#sum').innerHTML=
       '<div class="top"><div class="big">'+nf(total)+' <small>من ١٠٠ درجة</small></div><div class="small">تغطية المعايير بالشواهد: <b>'+nf(full)+'</b> من '+nf(NC)+' ('+nf(pct)+'٪) · المطلوب '+nf(need)+(need>10?' معيارًا':' معايير')+' على الأقل</div></div>'+
@@ -895,7 +899,7 @@ var PENDING=[];
     var D=DATA[key];cur=key;CONDS=D.conds;CRIT=D.crit;
     /* integrity: every criterion's levels must add up to its weight, and weights to 100 */
     TOTAL=0;MCOUNT=0;MAXW=0;
-    CRIT.forEach(function(c){var s=0;c.m.forEach(function(m){s+=Math.max.apply(null,m.sc.map(function(x){return x[1]}));MCOUNT++});c.max=s;TOTAL+=c.w;MAXW=Math.max(MAXW,c.w);if(s!==c.w&&window.console)console.warn('weight mismatch',key,c.n,s,c.w)});
+    CRIT.forEach(function(c){var s=0;c.m.forEach(function(m){if(!m.calc){m.calc=m.sc.some(function(x){return x[1]===0})?m.sc:m.sc.concat([['لم يُحدَّد بعد',0]])}s+=Math.max.apply(null,m.sc.map(function(x){return x[1]}));MCOUNT++});c.max=s;TOTAL+=c.w;MAXW=Math.max(MAXW,c.w);if(s!==c.w&&window.console)console.warn('weight mismatch',key,c.n,s,c.w)});
     if(TOTAL!==100&&window.console)console.warn('total != 100',key,TOTAL);
     var GN=D.gen||D.name;document.title='الدليل التفاعلي الاسترشادي لفئة '+GN;
     $('#h1').textContent='الدليل التفاعلي الاسترشادي لفئة '+GN;
@@ -915,7 +919,7 @@ var PENDING=[];
     /* conditions */
     var conds=$('#conds');conds.innerHTML='';
     CONDS.forEach(function(c,i){conds.appendChild(el('li','cond','<label for="cond'+i+'"><input type="checkbox" id="cond'+i+'"><span><span class="t">'+c[0]+'</span><br><span class="d">'+c[1]+'</span></span></label>'))});
-    conds.onchange=verdict;verdict();
+    conds.onchange=function(){verdict();save()};verdict();
     /* evidence rules (recency differs by category) */
     var yrs=D.years===2?'عامين':'ثلاثة أعوام';
     ruleList('#rules',RULES.map(function(r){return r[0]==='حداثة الوثائق والأدلة'?[r[0],r[1].replace('ثلاثة أعوام',yrs)]:r}));
@@ -943,10 +947,10 @@ var PENDING=[];
       var g=el('div','cg');g.appendChild(el('div','cgh','<b>'+nf(c.n)+'. '+c.name+'</b><span id="sub'+c.n+'"></span>'));
       c.m.forEach(function(m,k){
         var id='m'+c.n+'_'+k;ids.push({id:id,c:c,m:m});
-        state[id]=m.sc.length-1;
+        state[id]=m.calc.length-1;
         var r=el('div','row');r.innerHTML='<label for="'+id+'">'+m.s+'</label>';
         var sel=el('select');sel.id=id;
-        m.sc.forEach(function(x,idx){var o=document.createElement('option');o.value=idx;o.textContent=x[0]+' (+'+nf(x[1])+')';sel.appendChild(o)});
+        m.calc.forEach(function(x,idx){var o=document.createElement('option');o.value=idx;o.textContent=x[0]+' (+'+nf(x[1])+')';sel.appendChild(o)});
         sel.value=state[id];
         sel.addEventListener('change',function(){state[id]=+sel.value;recalc()});
         r.appendChild(sel);g.appendChild(r);
@@ -960,9 +964,9 @@ var PENDING=[];
       if(i===0)a=D.faq.who;else if(i===1)a=D.faq.cond;else if(i===3)a=a.replace('ثلاثة أعوام',yrs);
       fq.appendChild(el('details','faq','<summary>'+f[0]+'</summary><p>'+a+'</p>'));
     });
-    recalc();
+    restore();recalc();
   }
-  $('#reset').addEventListener('click',function(){ids.forEach(function(x){state[x.id]=x.m.sc.length-1;$('#'+x.id).value=state[x.id]});recalc()});
+  $('#reset').addEventListener('click',function(){ids.forEach(function(x){state[x.id]=x.m.calc.length-1;$('#'+x.id).value=state[x.id]});CONDS.forEach(function(_,i){$('#cond'+i).checked=false});verdict();recalc()});
 
   /* ---------- routing ---------- */
   var track=$('#track');
