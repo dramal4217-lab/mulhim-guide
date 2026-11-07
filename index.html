@@ -199,6 +199,34 @@ details.faq p{padding:0 14px 12px;color:var(--ink-2)}
 .contact a{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;font-size:15px;padding:8px 12px;border:1px solid var(--line);border-radius:12px;width:fit-content;max-width:100%}
 .contact a svg{width:20px;height:20px;flex:none;stroke:var(--accent);fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
 .contact .en{direction:ltr;unicode-bidi:embed;overflow-wrap:anywhere}
+
+.start{background:linear-gradient(180deg,var(--gold-soft),var(--surface));border:1px solid var(--gold-line);border-radius:14px;padding:18px;display:grid;gap:14px}
+.start h3{margin:0;font-family:var(--f-display);color:var(--accent);font-size:20px}
+.start .lead{margin:0;color:var(--ink-2);font-size:15px}
+.steps3{list-style:none;margin:0;padding:0;display:grid;gap:10px}
+.steps3 li{display:flex;gap:12px;align-items:flex-start;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px}
+.steps3 .no{flex:none;width:30px;height:30px;border-radius:50%;background:var(--accent);color:var(--on-accent);display:grid;place-items:center;font-weight:700;font-family:var(--f-display)}
+.steps3 b{display:block;font-size:16px}
+.steps3 span.d{color:var(--ink-2);font-size:14px}
+.stages{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:8px}
+.stages li{display:contents;border:0;background:none;padding:0;margin:0}
+.stages button{display:flex;align-items:center;gap:8px;border:1px solid var(--gold-line);background:var(--surface);color:inherit;border-radius:999px;padding:5px 12px 5px 8px;font:inherit;font-size:14px;cursor:pointer}
+.stages .n{width:22px;height:22px;border-radius:50%;background:var(--gold);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700}
+.min60{background:var(--surface);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.min60 .mh{padding:12px 14px 0;font-weight:700;color:var(--ink)}
+.min60 .mh small{color:var(--gold);font-weight:600;margin-inline-start:6px}
+.tabs{display:flex;gap:6px;padding:10px 12px 0;flex-wrap:wrap}
+.tabs button{border:1px solid var(--line);background:var(--surface-2);color:inherit;border-radius:999px;padding:6px 14px;font:inherit;font-size:14px;cursor:pointer}
+.tabs button[aria-selected="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent);font-weight:600}
+.tabp{padding:12px 14px 14px;display:grid;gap:10px;font-size:15px}
+.tabp[hidden]{display:none}
+.tabp p{margin:0}
+.tabp ul{margin:0;padding-inline-start:20px;display:grid;gap:6px}
+.tabp .go{justify-self:start}
+.wlist{display:grid;gap:6px}
+.wlist div{display:grid;grid-template-columns:1fr auto;gap:8px;align-items:center;font-size:14px}
+.wlist i{display:block;height:6px;border-radius:4px;background:var(--accent);grid-column:1/-1}
+.wlist b{color:var(--accent)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
 </style>
 
@@ -211,12 +239,23 @@ details.faq p{padding:0 14px 12px;color:var(--ink-2)}
     <p class="notice">أداة معرفية استرشادية مساندة أُعدّت من الدليل التنظيمي، وليست وثيقة رسمية. الدليل الرسمي لدى أمانة الجائزة هو المرجع الأساسي المعتمد.</p>
   </header>
 
-  <nav class="picker" aria-label="اختيار الفئة"><div class="pl">اختر فئتك</div><div class="chips" id="picker"></div></nav>
+  <nav class="picker" aria-label="اختيار الفئة"><div class="pl">فئة الترشح</div><div class="chips" id="picker"></div></nav>
 
   <nav class="track" aria-label="خطوات الدليل"><ol id="track"></ol></nav>
 
   <!-- 1 -->
   <section class="view" data-id="intro" hidden>
+    <div class="start" id="start">
+      <h3>ابدأ من هنا: كيف تستفيد من هذا الدليل؟</h3>
+      <p class="lead">ثلاث خطوات قصيرة تعرف بعدها ما المطلوب منك وأين أنت منه. وللدليل <b>سبع مراحل</b> تتنقل بينها بالضغط على أي مرحلة هنا، أو بزر «التالي» أسفل كل صفحة.</p>
+      <ol class="stages" id="stages" aria-label="مراحل الدليل السبع"></ol>
+      <ol class="steps3">
+        <li><span class="no">١</span><div><b>تحديد فئتك</b><span class="d">من الأزرار أعلى الصفحة، وسيتبدّل الدليل كله على الفئة التي تختارها.</span></div></li>
+        <li><span class="no">٢</span><div><b>معرفة المطلوب منك</b><span class="d">في بطاقة «المطلوب منك في ٦٠ ثانية» أدناه، لفئتك أنت.</span></div></li>
+        <li><span class="no">٣</span><div><b>قياس جاهزيتك</b><span class="d">فحص الأهلية، ثم تجربة الحاسبة لمعرفة موقعك وأقرب الدرجات التي يمكن كسبها.</span></div></li>
+      </ol>
+      <div class="min60" id="min60"></div>
+    </div>
     <header><div class="stepno">الخطوة ١ من ٧</div><h2>ما هذه الفئة، ولمن؟</h2></header>
     <div class="panel">
       <p id="def"></p>
@@ -246,14 +285,14 @@ details.faq p{padding:0 14px 12px;color:var(--ink-2)}
 
   <!-- 3 -->
   <section class="view" data-id="conditions" hidden>
-    <header><div class="stepno">الخطوة ٣ من ٧</div><h2>هل أنت مؤهل للترشح؟</h2><p class="sub" id="condsub"></p></header>
+    <header><div class="stepno">الخطوة ٣ من ٧</div><h2>هل تنطبق عليك شروط الترشح؟</h2><p class="sub" id="condsub"></p></header>
     <ul class="conds" id="conds"></ul>
     <div class="verdict" id="verdict" aria-live="polite"></div>
   </section>
 
   <!-- 4 -->
   <section class="view" data-id="evidence" hidden>
-    <header><div class="stepno">الخطوة ٤ من ٧</div><h2>لغة الدليل وضوابط الشواهد</h2><p class="sub">كل درجة في الملف تقوم على شاهد. اعرف المصطلحات أولًا ثم ضوابط قبول الشاهد.</p></header>
+    <header><div class="stepno">الخطوة ٤ من ٧</div><h2>لغة الدليل وضوابط الشواهد</h2><p class="sub">كل درجة في الملف تقوم على شاهد. المصطلحات أولًا، ثم ضوابط قبول الشاهد.</p></header>
     <div class="panel">
       <h3>كيف يتسلسل كل معيار</h3>
       <div class="flow"><span>المعيار</span><i>←</i><span>التفسير</span><i>←</i><span>المحدد</span><i>←</i><span>سلم التقدير والوزن</span><i>←</i><span>الشاهد</span></div>
@@ -267,14 +306,14 @@ details.faq p{padding:0 14px 12px;color:var(--ink-2)}
 
   <!-- 5 -->
   <section class="view" data-id="criteria" hidden>
-    <header><div class="stepno">الخطوة ٥ من ٧</div><h2 id="ch2"></h2><p class="sub">الأعمدة تبيّن وزن كل معيار من مئة درجة. اضغط على معيار لتفتح تفسيره ومحدداته وسلم تقديره.</p></header>
+    <header><div class="stepno">الخطوة ٥ من ٧</div><h2 id="ch2"></h2><p class="sub">الأعمدة تبيّن وزن كل معيار من مئة درجة. بالضغط على أي معيار يظهر تفسيره ومحدداته وسلم تقديره.</p></header>
     <div class="panel"><div class="bars" id="bars"></div></div>
     <div id="crits" style="display:grid;gap:10px"></div>
   </section>
 
   <!-- 6 -->
   <section class="view" data-id="calculator" hidden>
-    <header><div class="stepno">الخطوة ٦ من ٧</div><h2>احسب درجاتك التقديرية</h2><p class="sub">اختر المستوى الذي تحققه في كل محدد. الحاسبة تقدير شخصي يعتمد على سلالم الدليل، والتقييم الفعلي من لجان التحكيم.</p></header>
+    <header><div class="stepno">الخطوة ٦ من ٧</div><h2>حساب درجاتك التقديرية</h2><p class="sub">يُختار من القائمة المستوى الذي تحققه في كل محدد. الحاسبة تقدير شخصي يعتمد على سلالم الدليل، والتقييم الفعلي من لجان التحكيم.</p></header>
     <div class="calc" id="calc"></div>
     <div class="gain panel" id="gain"></div>
     <div class="sum" id="sum" aria-live="polite"></div>
@@ -880,7 +919,7 @@ var PENDING=[];
   function verdict(){
     var n=CONDS.filter(function(_,i){return $('#cond'+i).checked}).length,v=$('#verdict');
     var ok=n===CONDS.length;v.className='verdict'+(ok?' done':'');
-    v.innerHTML=ok?'<strong>الشروط متحققة كلها ('+nf(CONDS.length)+')</strong><span>انتقل إلى الشواهد.</span>':'<strong>'+nf(n)+' من '+nf(CONDS.length)+' شروط</strong><span class="small">علّم الشروط المتحققة لتعرف ما تبقى.</span>';
+    v.innerHTML=ok?'<strong>الشروط متحققة كلها ('+nf(CONDS.length)+')</strong><span>الخطوة التالية: الشواهد.</span>':'<strong>'+nf(n)+' من '+nf(CONDS.length)+' شروط</strong><span class="small">بوضع علامة على الشروط المتحققة يظهر ما تبقى.</span>';
   }
   function save(){try{var c=[];CONDS.forEach(function(_,i){if($('#cond'+i)&&$('#cond'+i).checked)c.push(i)});localStorage.setItem('mg1:'+cur,JSON.stringify({s:state,c:c}))}catch(e){}}
   function restore(){try{var sv=JSON.parse(localStorage.getItem('mg1:'+cur)||'null');if(!sv)return;ids.forEach(function(x){var v=sv.s&&sv.s[x.id];if(typeof v==='number'&&v>=0&&v<x.m.calc.length){state[x.id]=v;$('#'+x.id).value=v}});(sv.c||[]).forEach(function(i){var e=$('#cond'+i);if(e)e.checked=true});verdict()}catch(e){}}
@@ -905,6 +944,32 @@ var PENDING=[];
     var top=gaps.slice(0,3),g=$('#gain');
     g.innerHTML=top.length?'<h3>أكبر ثلاث فرص لرفع الدرجة</h3><ul>'+top.map(function(t){return '<li><span>'+t.s+' (المعيار '+nf(t.c)+')</span><b>+'+nf(t.gap)+'</b></li>'}).join('')+'</ul><p class="small">يُعدّ المعيار مكتمل الشواهد إذا اخترت لكل محدد فيه مستوى متحققًا. هذا المؤشر استرشادي لا يمثل نسبة القبول الرسمية، والاحتساب الرسمي من أمانة الجائزة.</p>':'<h3>بلغت الدرجة الكاملة</h3><p class="small">اخترت أعلى مستوى في كل محدد. هذا المؤشر استرشادي لا يمثل نسبة القبول الرسمية.</p>';
   }
+
+  /* ---------- "start here" card, built from the selected category's own data ---------- */
+  function renderStart(D,yrs){
+    var st=$('#stages');if(st){st.innerHTML='';STEPS.forEach(function(x,i){var li=document.createElement('li'),b=document.createElement('button');b.type='button';b.innerHTML='<span class="n">'+nf(i+1)+'</span>'+x[1];b.addEventListener('click',function(){go(x[0])});li.appendChild(b);st.appendChild(li)})}
+    var box=$('#min60');if(!box)return;
+    var GN=D.gen||D.name,links=0,need=Math.ceil(CRIT.length*0.6);
+    CRIT.forEach(function(c){c.m.forEach(function(m){if(m.link)links++})});
+    var top=CRIT.slice().sort(function(a,b){return b.w-a.w||a.n-b.n}).slice(0,3);
+    var cn=CRIT.length>10?'معيارًا':'معايير',mn=MCOUNT>10?'محددًا':'محددات';
+    var shown=CONDS.slice(0,3).map(function(c){return '<li>'+c[0]+'</li>'}).join('');
+    var rest=CONDS.length-3;
+    var tabs=[
+      ['من يترشح؟','<p>'+D.target+'</p><p class="small">من الشروط:</p><ul>'+shown+'</ul>'+(rest>0?'<p class="small">و'+nf(rest)+(rest>10?' شرطًا':' شروط')+' أخرى، تجدها كلها في خطوة الأهلية.</p>':'')+'<button class="btn primary go" type="button" data-go="conditions">فحص أهليتي ←</button>'],
+      ['ماذا أجهّز؟','<p>ملف شواهد موثّقة، تُبنى عليه كل درجة. القواعد الخمس الأساسية:</p><ul><li>اكتمال الشواهد لا يقل عن <b>٦٠٪</b> من معايير الفئة (أي '+nf(need)+' من '+nf(CRIT.length)+' '+cn+' على الأقل).</li><li>شواهد حديثة لا تتجاوز <b>'+yrs+'</b> بما فيها عام التقديم.</li><li>موثّقة رسميًا بالختم أو الباركود والتاريخ والتوقيع.</li><li>كل شاهد في موضع واحد فقط، ولا يتكرر.</li><li>لا روابط ولا تخزين سحابي خارجي'+(links?'، إلا في '+nf(links)+(links>10?' محددًا':' محددات')+' يُنص فيها على السماح بالرابط':'')+'.</li></ul><button class="btn primary go" type="button" data-go="evidence">تفاصيل ضوابط الشواهد ←</button>'],
+      ['كيف أُقيَّم؟','<p><b>'+nf(CRIT.length)+'</b> '+cn+' و<b>'+nf(MCOUNT)+'</b> '+mn+' من <b>١٠٠</b> درجة. أعلى المعايير وزنًا في هذه الفئة:</p><div class="wlist">'+top.map(function(c){return '<div><span>'+nf(c.n)+'. '+c.name+'</span><b>'+nf(c.w)+'</b><i style="width:'+(c.w/top[0].w*100)+'%"></i></div>'}).join('')+'</div><button class="btn primary go" type="button" data-go="calculator">حساب درجاتي ←</button>']
+    ];
+    box.innerHTML='<div class="mh">المطلوب منك في ٦٠ ثانية <small>فئة '+GN+'</small></div><div class="tabs" role="tablist"></div><div class="tabbody"></div>';
+    var tb=box.querySelector('.tabs'),body=box.querySelector('.tabbody');
+    tabs.forEach(function(t,i){
+      var b=document.createElement('button');b.type='button';b.setAttribute('role','tab');b.textContent=t[0];b.setAttribute('aria-selected',i===0?'true':'false');
+      var pn=document.createElement('div');pn.className='tabp';pn.setAttribute('role','tabpanel');pn.hidden=i!==0;pn.innerHTML=t[1];
+      b.addEventListener('click',function(){tb.querySelectorAll('button').forEach(function(x){x.setAttribute('aria-selected','false')});b.setAttribute('aria-selected','true');body.querySelectorAll('.tabp').forEach(function(x){x.hidden=true});pn.hidden=false});
+      tb.appendChild(b);body.appendChild(pn);
+    });
+    body.querySelectorAll('[data-go]').forEach(function(b){b.addEventListener('click',function(){go(b.getAttribute('data-go'))})});
+  }
   function renderCat(key){
     var D=DATA[key];cur=key;CONDS=D.conds;CRIT=D.crit;
     /* integrity: every criterion's levels must add up to its weight, and weights to 100 */
@@ -917,7 +982,7 @@ var PENDING=[];
     $('#facts').innerHTML='<span><b>'+nf(CRIT.length)+'</b> '+(CRIT.length>10?'معيارًا':'معايير')+'</span><span><b>'+nf(MCOUNT)+'</b> '+(MCOUNT>10?'محددًا':'محددات')+'</span><span><b>١٠٠</b> درجة</span>';
     $('#target').textContent=D.target;
     var tn=$('#targetNote');tn.textContent=D.targetNote||'';tn.hidden=!D.targetNote;
-    $('#condsub').textContent=(wordN[CONDS.length]||nf(CONDS.length)+' شروط')+' عامة ومهنية. علّم على كل شرط يتحقق فيك.';
+    $('#condsub').textContent=(wordN[CONDS.length]||nf(CONDS.length)+' شروط')+' عامة ومهنية. تُعلَّم الشروط التي تنطبق عليك.';
     $('#ch2').textContent='المعايير ('+nf(CRIT.length)+')';
     $('#src').textContent='مصدر المحتوى: الدليل التنظيمي لجائزة محافظ الطائف للتميز التعليمي، فئة '+GN+'، الإصدار الثالث ١٤٤٨هـ.';
     /* picker + chips */
@@ -974,6 +1039,7 @@ var PENDING=[];
       if(i===0)a=D.faq.who;else if(i===1)a=D.faq.cond;else if(i===3)a=a.replace('ثلاثة أعوام',yrs);
       fq.appendChild(el('details','faq','<summary>'+f[0]+'</summary><p>'+a+'</p>'));
     });
+    renderStart(D,yrs);
     restore();recalc();
   }
   $('#reset').addEventListener('click',function(){ids.forEach(function(x){state[x.id]=x.m.calc.length-1;$('#'+x.id).value=state[x.id]});CONDS.forEach(function(_,i){$('#cond'+i).checked=false});verdict();recalc()});
