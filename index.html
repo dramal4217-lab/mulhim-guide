@@ -228,6 +228,54 @@ details.faq p{padding:0 14px 12px;color:var(--ink-2)}
 .wlist i{display:block;height:6px;border-radius:4px;background:var(--accent);grid-column:1/-1}
 .wlist b{color:var(--accent)}
 @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+/* calculator v2: option cards, per-criterion status, verdict panel */
+.vh{position:absolute;opacity:0;pointer-events:none;width:1px;height:1px;overflow:hidden}
+.cgh{flex-wrap:wrap;align-items:center}
+.cst{font-size:12.5px;font-weight:600;padding:1px 11px 3px;border-radius:999px;background:var(--surface-2);color:var(--ink-2);white-space:nowrap}
+.cst.part{background:var(--gold-soft);color:var(--gold)}
+.cst.full{background:var(--accent);color:var(--on-accent)}
+.cgh .csub{margin-inline-start:auto}
+.row2{display:grid;gap:8px;padding:14px 0 4px;border-top:1px dashed var(--line)}
+.mt{display:flex;gap:8px;align-items:baseline;flex-wrap:wrap}
+.mt b{font-weight:600;font-size:15.5px}
+.need{background:var(--surface-2);border-radius:10px;padding:8px 12px}
+.need small{display:block;font-size:12px;font-weight:600;color:var(--gold);letter-spacing:.03em}
+.need p{margin:0;font-size:14px;color:var(--ink-2);line-height:1.65}
+.opts{display:grid;gap:6px}
+.opt{display:flex;justify-content:space-between;align-items:center;gap:10px;text-align:start;min-height:46px;padding:8px 12px;border-radius:10px;border:1.5px solid var(--line);background:var(--surface);font:inherit;color:var(--ink);cursor:pointer;line-height:1.5}
+.opt b{font-family:var(--f-display);flex:none;background:var(--surface-2);border-radius:8px;padding:0 10px 2px;min-width:40px;text-align:center}
+.opt[aria-checked="true"]{border-color:var(--accent);background:var(--ok-soft);font-weight:600}
+.opt[aria-checked="true"] b{background:var(--accent);color:var(--on-accent)}
+.opt:focus-visible{outline:3px solid var(--gold-line);outline-offset:2px}
+.upl{font-size:13.5px;color:var(--gold);font-weight:600;min-height:20px;padding-bottom:6px}
+.row2.flash{animation:fl2 1.8s}
+@keyframes fl2{0%,55%{background:var(--gold-soft)}100%{background:transparent}}
+.how2{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px}
+.how2 h3{margin:0 0 6px;font-size:16px}
+.how2 ul{margin:0;padding:0 18px 0 0;font-size:14.5px;line-height:1.75}
+.vrow{display:flex;gap:12px;align-items:flex-start}
+.vi{flex:none;width:38px;height:38px;border-radius:50%;display:grid;place-items:center;font-family:var(--f-display);font-size:19px;background:var(--surface-2);color:var(--ink-2)}
+.sum[data-tone="mid"] .vi{background:var(--gold-soft);color:var(--gold)}
+.sum[data-tone="ok"] .vi{background:var(--accent);color:var(--on-accent)}
+.vt{flex:1;min-width:0}
+.vt b{display:block;font-family:var(--f-display);font-size:17.5px;line-height:1.4;font-weight:700}
+.vt span{font-size:13.5px;color:var(--ink-2)}
+.scr{flex:none;text-align:center;font-family:var(--f-display);font-size:26px;line-height:1;color:var(--accent)}
+.scr small{display:block;font-family:var(--f-body);font-size:11px;color:var(--ink-2);margin-top:4px}
+.dots2{display:flex;align-items:center;gap:4px;margin-top:2px}
+.dt{flex:1;min-width:0;height:12px;border-radius:6px;background:var(--surface-2);border:1px solid var(--line)}
+.dt.part{background:linear-gradient(to left,var(--gold-line) 50%,var(--surface-2) 50%);border-color:var(--gold-line)}
+.dt.full{background:var(--accent);border-color:var(--accent)}
+.thr2{flex:none;width:2px;height:24px;background:var(--gold);border-radius:2px}
+.dl{display:flex;justify-content:space-between;gap:8px;font-size:12.5px;color:var(--ink-2)}
+.dl em{font-style:normal;color:var(--gold);font-weight:600}
+.next2{display:grid;gap:6px;background:var(--gold-soft);border-radius:10px;padding:10px 12px;margin-bottom:10px}
+.next2 small{font-size:12px;font-weight:600;color:var(--gold)}
+.next2 p{margin:0;font-size:14.5px}
+#toast2{position:fixed;left:50%;top:max(16px,env(safe-area-inset-top,0px));transform:translate(-50%,-90px);background:var(--accent);color:var(--on-accent);padding:9px 20px 11px;border-radius:30px;font-weight:600;z-index:80;transition:transform .35s;max-width:92vw;text-align:center;font-size:14.5px}
+#toast2.show{transform:translate(-50%,0)}
+.pop2{position:fixed;width:10px;height:14px;border-radius:2px;z-index:90;pointer-events:none}
+@media (prefers-reduced-motion:reduce){#toast2{transition:none}.row2.flash{animation:none}}
 </style>
 
 <div class="wrap" dir="rtl" lang="ar">
@@ -313,11 +361,12 @@ details.faq p{padding:0 14px 12px;color:var(--ink-2)}
 
   <!-- 6 -->
   <section class="view" data-id="calculator" hidden>
-    <header><div class="stepno">الخطوة ٦ من ٧</div><h2>حساب درجاتك التقديرية</h2><p class="sub">يُختار من القائمة المستوى الذي تحققه في كل محدد. الحاسبة تقدير شخصي يعتمد على سلالم الدليل، والتقييم الفعلي من لجان التحكيم.</p></header>
+    <header><div class="stepno">الخطوة ٦ من ٧</div><h2>حساب درجاتك التقديرية</h2><p class="sub">اضغط على المستوى الذي تحققه في كل محدد. الحاسبة تقدير شخصي يعتمد على سلالم الدليل، والتقييم الفعلي من لجان التحكيم.</p></header>
+    <div class="how2"><h3>على أي أساس تختار المستوى؟</h3><ul><li>اقرأ «المطلوب» تحت كل محدد، فهو الشاهد الذي يُبنى عليه التقدير.</li><li>اختر أعلى مستوى <b>تستطيع إثباته بشاهد موثّق</b> الآن، لا ما أنجزته دون وثيقة.</li><li>تحت اختيارك سطر يبيّن ما تحتاجه للارتقاء إلى المستوى الذي يليه.</li></ul></div>
     <div class="calc" id="calc"></div>
     <div class="gain panel" id="gain"></div>
     <div class="sum" id="sum" aria-live="polite"></div>
-    <div><button class="btn" id="reset" type="button">تصفير الاختيارات</button></div>
+    <div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" id="copysum" type="button">نسخ ملخص جاهزيتي</button><button class="btn" id="reset" type="button">تصفير الاختيارات</button></div>
     <p class="small">تُحفظ اختياراتك على هذا الجهاز فقط، ولا تُرسل إلى أي جهة.</p>
   </section>
 
@@ -904,7 +953,7 @@ var PENDING=[];
   var $=function(s,r){return (r||document).querySelector(s)};
   function el(tag,cls,html){var e=document.createElement(tag);if(cls)e.className=cls;if(html!=null)e.innerHTML=html;return e}
 
-  var CONDS,CRIT,MAXW,state,ids,cur='admin',MCOUNT=0,TOTAL=0;
+  var CONDS,CRIT,MAXW,state,ids,cur='admin',MCOUNT=0,TOTAL=0,prevDone=null;
   var j=$('#journey');
   JOURNEY.forEach(function(p){
     var ph=el('div','phase');ph.appendChild(el('h3',null,p[0]));
@@ -923,26 +972,58 @@ var PENDING=[];
   }
   function save(){try{var c=[];CONDS.forEach(function(_,i){if($('#cond'+i)&&$('#cond'+i).checked)c.push(i)});localStorage.setItem('mg1:'+cur,JSON.stringify({s:state,c:c}))}catch(e){}}
   function restore(){try{var sv=JSON.parse(localStorage.getItem('mg1:'+cur)||'null');if(!sv)return;ids.forEach(function(x){var v=sv.s&&sv.s[x.id];if(typeof v==='number'&&v>=0&&v<x.m.calc.length){state[x.id]=v;$('#'+x.id).value=v}});(sv.c||[]).forEach(function(i){var e=$('#cond'+i);if(e)e.checked=true});verdict()}catch(e){}}
+  function toast2(t){var e=$('#toast2');if(!e){e=el('div');e.id='toast2';e.setAttribute('role','status');document.body.appendChild(e)}e.textContent=t;e.classList.add('show');clearTimeout(toast2.t);toast2.t=setTimeout(function(){e.classList.remove('show')},2300)}
+  function burst(){if(window.matchMedia&&matchMedia('(prefers-reduced-motion:reduce)').matches||!document.body.animate)return;var cs=['#285447','#8a6420','#d9b676','#1f6a4d'];for(var k=0;k<34;k++){var d=document.createElement('i');d.className='pop2';d.style.background=cs[k%4];d.style.left=(30+Math.random()*40)+'vw';d.style.top='62vh';document.body.appendChild(d);var dx=(Math.random()-.5)*340,dy=-(120+Math.random()*300);(function(d,dx,dy){d.animate([{transform:'translate(0,0) rotate(0)',opacity:1},{transform:'translate('+dx+'px,'+dy+'px) rotate('+Math.random()*700+'deg)',opacity:1,offset:.6},{transform:'translate('+dx*1.1+'px,'+(dy+380)+'px) rotate(880deg)',opacity:0}],{duration:1400+Math.random()*400,easing:'cubic-bezier(.2,.7,.3,1)'}).onfinish=function(){d.remove()}})(d,dx,dy)}}
   function recalc(){
-    var total=0,full=0,gaps=[];
+    var total=0,full=0,gaps=[],info=[];
     CRIT.forEach(function(c){
-      var sub=0,cm=ids.filter(function(x){return x.c===c});
+      var sub=0,cm=ids.filter(function(x){return x.c===c}),nz=0;
       cm.forEach(function(x){
         var pts=x.m.calc[state[x.id]][1],mx=Math.max.apply(null,x.m.sc.map(function(y){return y[1]}));
-        sub+=pts;if(mx-pts>0)gaps.push({s:x.m.s,c:c.n,gap:mx-pts,mx:mx});
+        sub+=pts;if(pts>0)nz++;if(mx-pts>0)gaps.push({s:x.m.s,c:c.n,gap:mx-pts,mx:mx});
+        /* option cards + "how to move up" line */
+        var row=$('#r_'+x.id);
+        row.querySelectorAll('.opt').forEach(function(o){o.setAttribute('aria-checked',String(+o.dataset.idx===state[x.id]))});
+        var up=row.querySelector('.upl'),nx=null;
+        x.m.calc.forEach(function(o){if(o[1]>pts&&(nx===null||o[1]<nx[1]))nx=o});
+        up.textContent=pts>=mx?'أعلى مستوى ✓ احفظ شاهدك الموثّق في الملف.':(pts===0?'ابدأ: اختر أي مستوى تستطيع إثباته بشاهد.':'للارتقاء: '+nx[0]+' (+'+nf(nx[1])+')');
       });
-      var ok=cm.every(function(x){return x.m.calc[state[x.id]][1]>0});if(ok)full++;
+      var ok=nz===cm.length;if(ok)full++;
+      info.push({c:c,n:cm.length,nz:nz,ok:ok});
       total+=sub;$('#sub'+c.n).textContent=nf(sub)+' / '+nf(c.w);
+      var st=$('#st'+c.n);st.className='cst'+(ok?' full':(nz>0?' part':''));
+      st.textContent=ok?'مكتمل الشواهد ✓':(nz>0?'ناقص: '+nf(nz)+' من '+nf(cm.length)+' محددات':'لم يبدأ');
     });
     save();
-    var NC=CRIT.length,pct=Math.round(full/NC*100),need=Math.ceil(NC*0.6);
-    $('#sum').innerHTML=
-      '<div class="top"><div class="big">'+nf(total)+' <small>من ١٠٠ درجة</small></div><div class="small">تغطية المعايير بالشواهد: <b>'+nf(full)+'</b> من '+nf(NC)+' ('+nf(pct)+'٪) · المطلوب '+nf(need)+(need>10?' معيارًا':' معايير')+' على الأقل</div></div>'+
-      '<div><div class="meter"><i style="width:'+total+'%"></i></div><div class="lab"><span>الدرجة</span><span>١٠٠</span></div></div>'+
-      '<div><div class="meter ev"><i style="width:'+pct+'%"></i><span class="mark" style="right:60%"></span></div><div class="lab"><span>مؤشر تغطية استرشادي · الحد الأدنى للقبول المبدئي في الإطار التنظيمي ٦٠٪ من معايير الفئة</span></div></div>';
+    var NC=CRIT.length,need=Math.ceil(NC*0.6),left=Math.max(0,need-full),partN=info.filter(function(q){return !q.ok&&q.nz>0}).length;
+    var tone,icon,main,subt;
+    if(total===0){tone='low';icon='·';main='لم تبدأ بعد';subt='اختر مستوى أي محدد وسترى موقفك هنا.'}
+    else if(full>=need){tone='ok';icon='✓';main='أنت فوق الحد الأدنى: اكتملت شواهد '+nf(full)+' من '+nf(NC)+(NC>10?' معيارًا':' معايير');subt='واصل استكمال المحددات الناقصة لرفع درجتك.'}
+    else{tone='mid';icon=nf(left);main='اكتملت شواهد '+nf(full)+' من '+nf(NC)+(NC>10?' معيارًا':' معايير');subt='يلزمك '+nf(left)+(left>10?' معيارًا':' معايير')+' أخرى لبلوغ الحد الأدنى المبدئي'+(partN?' · '+nf(partN)+' منها قيد الإنجاز':'')+'.'}
+    var dots='';info.forEach(function(q,i){if(i===need&&need<NC)dots+='<span class="thr2"></span>';dots+='<span class="dt'+(q.ok?' full':(q.nz>0?' part':''))+'" title="المعيار '+nf(q.c.n)+': '+q.c.name+'"></span>'});
+    var sm=$('#sum');sm.dataset.tone=tone;
+    sm.innerHTML='<div class="vrow"><div class="vi">'+icon+'</div><div class="vt"><b>'+main+'</b><span>'+subt+'</span></div><div class="scr">'+nf(total)+'<small>من ١٠٠</small></div></div>'+
+      '<div class="dots2">'+dots+'</div>'+
+      '<div class="dl"><span>'+nf(full)+' معايير مكتملة الشواهد</span><em>الحد الأدنى '+nf(need)+' من '+nf(NC)+' (٦٠٪)</em></div>';
+    /* celebrate newly completed criteria */
+    var now=info.map(function(q){return q.ok});
+    if(prevDone){var pc=prevDone.filter(Boolean).length;now.forEach(function(v,i){if(v&&!prevDone[i])toast2('اكتملت شواهد المعيار '+nf(info[i].c.n)+' ✓')});if(full>=need&&pc<need){burst();toast2('بلغت الحد الأدنى المبدئي')}}
+    prevDone=now;
+    /* fastest next step */
+    var cand=info.filter(function(q){return !q.ok}).sort(function(a,b){return (a.n-a.nz)-(b.n-b.nz)||b.c.w-a.c.w||a.c.n-b.c.n})[0],nxt='';
+    if(cand){
+      var tgt=ids.filter(function(x){return x.c===cand.c&&x.m.calc[state[x.id]][1]===0})[0],rem=cand.n-cand.nz;
+      nxt='<div class="next2"><small>الخطوة التالية الأسرع</small><p>أقرب معيار يكتمل: «'+cand.c.name+'» (المعيار '+nf(cand.c.n)+'). يتبقى '+nf(rem)+(rem>10?' محددًا':' من محدداته')+' بلا شاهد، ابدأ بـ«'+tgt.m.s+'».</p><button class="btn" type="button" id="gonext" data-id="'+tgt.id+'">اذهب إلى المحدد</button></div>';
+    }
     gaps.sort(function(a,b){return b.gap-a.gap||a.c-b.c});
     var top=gaps.slice(0,3),g=$('#gain');
-    g.innerHTML=top.length?'<h3>أكبر ثلاث فرص لرفع الدرجة</h3><ul>'+top.map(function(t){return '<li><span>'+t.s+' (المعيار '+nf(t.c)+')</span><b>+'+nf(t.gap)+'</b></li>'}).join('')+'</ul><p class="small">يُعدّ المعيار مكتمل الشواهد إذا اخترت لكل محدد فيه مستوى متحققًا. هذا المؤشر استرشادي لا يمثل نسبة القبول الرسمية، والاحتساب الرسمي من أمانة الجائزة.</p>':'<h3>بلغت الدرجة الكاملة</h3><p class="small">اخترت أعلى مستوى في كل محدد. هذا المؤشر استرشادي لا يمثل نسبة القبول الرسمية.</p>';
+    g.innerHTML=nxt+(top.length?'<h3>أكبر ثلاث فرص لرفع الدرجة</h3><ul>'+top.map(function(t){return '<li><span>'+t.s+' (المعيار '+nf(t.c)+')</span><b>+'+nf(t.gap)+'</b></li>'}).join('')+'</ul><p class="small">يُعدّ المعيار مكتمل الشواهد إذا اخترت لكل محدد فيه مستوى متحققًا. هذا المؤشر استرشادي لا يمثل نسبة القبول الرسمية، والاحتساب الرسمي من أمانة الجائزة.</p>':'<h3>بلغت الدرجة الكاملة</h3><p class="small">اخترت أعلى مستوى في كل محدد. هذا المؤشر استرشادي لا يمثل نسبة القبول الرسمية.</p>');
+    var gn=$('#gonext');if(gn)gn.addEventListener('click',function(){var r=$('#r_'+gn.dataset.id);r.scrollIntoView({behavior:'smooth',block:'center'});r.classList.remove('flash');void r.offsetWidth;r.classList.add('flash')});
+  }
+  function summaryText(){
+    var t=0,full=0,lines=[];
+    CRIT.forEach(function(c){var cm=ids.filter(function(x){return x.c===c}),sub=0,nz=0;cm.forEach(function(x){var p=x.m.calc[state[x.id]][1];sub+=p;if(p>0)nz++});var ok=nz===cm.length;if(ok)full++;t+=sub;lines.push(nf(c.n)+'. '+c.name+': '+nf(sub)+' / '+nf(c.w)+' — '+(ok?'مكتمل الشواهد':(nz>0?'ناقص ('+nf(nz)+' من '+nf(cm.length)+' محددات)':'لم يبدأ')))});
+    var D=DATA[cur];return 'ملخص جاهزيتي · فئة '+(D.gen||D.name)+'\nالدرجة التقديرية: '+nf(t)+' من ١٠٠\nالمعايير مكتملة الشواهد: '+nf(full)+' من '+nf(CRIT.length)+' (الحد الأدنى '+nf(Math.ceil(CRIT.length*0.6))+')\n\n'+lines.join('\n')+'\n\nتقدير استرشادي، والاحتساب الرسمي من أمانة الجائزة.';
   }
 
   /* ---------- "start here" card, built from the selected category's own data ---------- */
@@ -1016,19 +1097,28 @@ var PENDING=[];
       crits.appendChild(d);
     });
     /* calculator */
-    state={};ids=[];
+    state={};ids=[];prevDone=null;
     var calc=$('#calc');calc.innerHTML='';
     CRIT.forEach(function(c){
-      var g=el('div','cg');g.appendChild(el('div','cgh','<b>'+nf(c.n)+'. '+c.name+'</b><span id="sub'+c.n+'"></span>'));
+      var g=el('div','cg');g.id='cg'+c.n;
+      g.appendChild(el('div','cgh','<b>'+nf(c.n)+'. '+c.name+'</b><span class="cst" id="st'+c.n+'"></span><span class="csub" id="sub'+c.n+'"></span>'));
       c.m.forEach(function(m,k){
         var id='m'+c.n+'_'+k;ids.push({id:id,c:c,m:m});
         state[id]=m.calc.length-1;
-        var r=el('div','row');r.innerHTML='<label for="'+id+'">'+m.s+'</label>';
-        var sel=el('select');sel.id=id;
+        var r=el('div','row2');r.id='r_'+id;
+        r.innerHTML='<div class="mt"><b>'+m.s+'</b>'+(m.link?'<span class="tag">يجوز الرابط</span>':'')+'</div><div class="need"><small>المطلوب</small><p>'+m.t+'</p></div>';
+        var sel=el('select','vh');sel.id=id;sel.setAttribute('aria-hidden','true');sel.tabIndex=-1;
         m.calc.forEach(function(x,idx){var o=document.createElement('option');o.value=idx;o.textContent=x[0]+' (+'+nf(x[1])+')';sel.appendChild(o)});
         sel.value=state[id];
         sel.addEventListener('change',function(){state[id]=+sel.value;recalc()});
-        r.appendChild(sel);g.appendChild(r);
+        var opts=el('div','opts');opts.setAttribute('role','radiogroup');opts.setAttribute('aria-label',m.s);
+        m.calc.forEach(function(x,idx){
+          var b=el('button','opt','<span class="ol">'+x[0]+'</span><b>+'+nf(x[1])+'</b>');b.type='button';b.setAttribute('role','radio');b.setAttribute('aria-checked','false');b.dataset.idx=idx;
+          b.addEventListener('click',function(){sel.value=idx;state[id]=idx;recalc()});
+          opts.appendChild(b);
+        });
+        r.appendChild(opts);r.appendChild(sel);r.appendChild(el('div','upl'));
+        g.appendChild(r);
       });
       calc.appendChild(g);
     });
@@ -1042,6 +1132,7 @@ var PENDING=[];
     renderStart(D,yrs);
     restore();recalc();
   }
+  $('#copysum').addEventListener('click',function(){var t=summaryText();function fb(){var ta=document.createElement('textarea');ta.value=t;document.body.appendChild(ta);ta.select();try{document.execCommand('copy');toast2('تم نسخ الملخص')}catch(e){toast2('حدّد النص وانسخه يدويًا')}ta.remove()}try{navigator.clipboard.writeText(t).then(function(){toast2('تم نسخ الملخص')},fb)}catch(e){fb()}});
   $('#reset').addEventListener('click',function(){ids.forEach(function(x){state[x.id]=x.m.calc.length-1;$('#'+x.id).value=state[x.id]});CONDS.forEach(function(_,i){$('#cond'+i).checked=false});verdict();recalc()});
 
   /* ---------- routing ---------- */
